@@ -1,19 +1,17 @@
 package com.example.zimkitdemo;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallService;
 import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationConfig;
-import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationService;
 import com.zegocloud.zimkit.common.ZIMKitRouter;
 import com.zegocloud.zimkit.common.enums.ZIMKitConversationType;
 import com.zegocloud.zimkit.components.message.interfaces.ZIMKitMessagesListListener;
@@ -23,16 +21,13 @@ import com.zegocloud.zimkit.services.ZIMKit;
 import com.zegocloud.zimkit.services.callback.CreateGroupCallback;
 import com.zegocloud.zimkit.services.callback.JoinGroupCallback;
 import com.zegocloud.zimkit.services.model.ZIMKitGroupInfo;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import im.zego.zim.ZIM;
 import im.zego.zim.entity.ZIMError;
 import im.zego.zim.entity.ZIMErrorUserInfo;
 import im.zego.zim.enums.ZIMConversationType;
 import im.zego.zim.enums.ZIMErrorCode;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ConversationActivity extends AppCompatActivity {
 
@@ -51,7 +46,7 @@ public class ConversationActivity extends AppCompatActivity {
         String userID = ZIMKit.getLocalUser().getId();
         String userName = ZIMKit.getLocalUser().getName();
         ZegoUIKitPrebuiltCallInvitationConfig config = new ZegoUIKitPrebuiltCallInvitationConfig();
-        ZegoUIKitPrebuiltCallInvitationService.init(MyApplication.sInstance,
+        ZegoUIKitPrebuiltCallService.init(MyApplication.sInstance,
                                                     KeyCenter.APP_ID,
                                                     KeyCenter.APP_SIGN,
                                                     userID,
@@ -80,7 +75,7 @@ public class ConversationActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ZIMKit.disconnectUser();
-        ZegoUIKitPrebuiltCallInvitationService.unInit();
+        ZegoUIKitPrebuiltCallService.logoutUser();
     }
 
     @Override
