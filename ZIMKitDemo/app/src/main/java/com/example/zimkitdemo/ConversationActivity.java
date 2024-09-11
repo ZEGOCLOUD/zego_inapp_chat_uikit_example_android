@@ -10,20 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallService;
-import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationConfig;
 import com.zegocloud.zimkit.common.ZIMKitRouter;
 import com.zegocloud.zimkit.common.enums.ZIMKitConversationType;
-import com.zegocloud.zimkit.components.message.interfaces.ZIMKitMessagesListListener;
-import com.zegocloud.zimkit.components.message.model.ZIMKitHeaderBar;
-import com.zegocloud.zimkit.components.message.ui.ZIMKitMessageFragment;
 import com.zegocloud.zimkit.services.ZIMKit;
 import com.zegocloud.zimkit.services.callback.CreateGroupCallback;
 import com.zegocloud.zimkit.services.callback.JoinGroupCallback;
 import com.zegocloud.zimkit.services.model.ZIMKitGroupInfo;
 import im.zego.zim.entity.ZIMError;
 import im.zego.zim.entity.ZIMErrorUserInfo;
-import im.zego.zim.enums.ZIMConversationType;
 import im.zego.zim.enums.ZIMErrorCode;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,43 +33,13 @@ public class ConversationActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        initData();
     }
 
-    private void initData() {
-        String userID = ZIMKit.getLocalUser().getId();
-        String userName = ZIMKit.getLocalUser().getName();
-        ZegoUIKitPrebuiltCallInvitationConfig config = new ZegoUIKitPrebuiltCallInvitationConfig();
-        ZegoUIKitPrebuiltCallService.init(MyApplication.sInstance,
-                                                    KeyCenter.APP_ID,
-                                                    KeyCenter.APP_SIGN,
-                                                    userID,
-                                                    userName,
-                                                    config);
-
-        ZIMKit.registerMessageListListener(new ZIMKitMessagesListListener() {
-            @Override
-            public ZIMKitHeaderBar getMessageListHeaderBar(ZIMKitMessageFragment fragment) {
-                if (fragment != null) {
-                    if (fragment.getConversationType() == ZIMConversationType.PEER) {
-                        String conversationID = fragment.getConversationID();
-                        String conversationName = fragment.getConversationName();
-                        ZegoSendCallButton sendCallButton = new ZegoSendCallButton(ConversationActivity.this, conversationID, conversationName);
-                        ZIMKitHeaderBar headerBar = new ZIMKitHeaderBar();
-                        headerBar.setRightView(sendCallButton);
-                        return headerBar;
-                    }
-                }
-                return null;
-            }
-        });
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ZIMKit.disconnectUser();
-        ZegoUIKitPrebuiltCallService.logoutUser();
     }
 
     @Override
@@ -190,7 +154,8 @@ public class ConversationActivity extends AppCompatActivity {
     private void createGroup(String groupName, String groupID, List<String> userIDs) {
         ZIMKit.createGroup(groupName, groupID, userIDs, new CreateGroupCallback() {
             @Override
-            public void onCreateGroup(ZIMKitGroupInfo groupInfo, ArrayList<ZIMErrorUserInfo> inviteUserErrors, ZIMError error) {
+            public void onCreateGroup(ZIMKitGroupInfo groupInfo, ArrayList<ZIMErrorUserInfo> inviteUserErrors,
+                ZIMError error) {
                 if (error.code == ZIMErrorCode.SUCCESS) {
                     startChat(groupInfo.getId(), ZIMKitConversationType.ZIMKitConversationTypeGroup);
                 }

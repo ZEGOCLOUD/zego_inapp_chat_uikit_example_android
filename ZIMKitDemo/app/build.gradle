@@ -42,5 +42,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation 'com.github.ZEGOCLOUD:zego_inapp_chat_uikit_android:+'
-    implementation 'com.github.ZEGOCLOUD:zego_uikit_prebuilt_call_android:+'
+    // uncomment it if you want to use callkit plugin
+  //  implementation 'com.github.ZEGOCLOUD:zego_uikit_prebuilt_call_android:+'
 }

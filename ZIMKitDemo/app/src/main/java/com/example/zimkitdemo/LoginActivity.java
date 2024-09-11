@@ -1,23 +1,16 @@
 package com.example.zimkitdemo;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.zegocloud.zimkit.components.conversation.ui.ZIMKitConversationActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import com.zegocloud.zimkit.services.ZIMKit;
-
-import java.util.Random;
-
 import im.zego.zim.enums.ZIMErrorCode;
+import java.util.Random;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -71,8 +64,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private  String randomUserId() {
+    private String randomUserId() {
         int randomNum = 100 + new Random().nextInt(9901);
-        return  String.valueOf(randomNum);
+        return String.valueOf(randomNum);
     }
 }
