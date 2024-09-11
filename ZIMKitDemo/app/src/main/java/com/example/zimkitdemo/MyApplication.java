@@ -1,11 +1,8 @@
 package com.example.zimkitdemo;
 
 import android.app.Application;
-import com.zegocloud.uikit.plugin.adapter.plugins.call.ZegoCallPluginConfig;
-import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationConfig;
 import com.zegocloud.zimkit.services.ZIMKit;
 import com.zegocloud.zimkit.services.ZIMKitConfig;
-import com.zegocloud.zimkit.services.config.ZIMKitInputButtonName;
 
 public class MyApplication extends Application {
 
